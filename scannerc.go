@@ -2532,7 +2532,11 @@ func yaml_parser_scan_flow_scalar(parser *yaml_parser_t, token *yaml_token_t, si
 			whitespaces = whitespaces[:0]
 		}
 	}
-
+	// Keep Double Quotes Intact for String Literals
+	if !single {
+		s = append([]byte("\""), s...)
+		s = append(s, []byte("\"")...)
+	}
 	// Eat the right quote.
 	skip(parser)
 	end_mark := parser.mark
